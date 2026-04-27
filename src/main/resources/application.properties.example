@@ -1,0 +1,10 @@
+server.port=8080
+
+db.url=jdbc:postgresql://localhost:5432/otp_service_db
+db.username=postgres
+db.password=CHANGE_ME
+
+jwt.secret=CHANGE_ME_SECRET_KEY
+jwt.expiration.minutes=60
+
+otp.expiration.check.interval.seconds=30
