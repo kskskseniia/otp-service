@@ -6,12 +6,14 @@ import org.example.model.Role;
 import org.example.model.User;
 import org.example.service.AuthService;
 import org.example.util.HttpUtils;
+import org.example.security.JwtService;
 
 import java.io.IOException;
 import java.util.Map;
 
 public class AuthHandler implements HttpHandler {
     private final AuthService authService = new AuthService();
+    private final JwtService jwtService = new JwtService();
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -63,9 +65,10 @@ public class AuthHandler implements HttpHandler {
                 request.password()
         );
 
-        // Токен сделаем следующим этапом. Пока возвращаем факт успешного входа.
+        String token = jwtService.generateToken(user);
+
         HttpUtils.sendJson(exchange, 200, Map.of(
-                "message", "Login successful",
+                "token", token,
                 "userId", user.getId(),
                 "username", user.getUsername(),
                 "role", user.getRole().name()
