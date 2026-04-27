@@ -1,26 +1,25 @@
 package org.example;
 
-import org.example.dao.UserDao;
-import org.example.model.Role;
-import org.example.model.User;
+import com.sun.net.httpserver.HttpServer;
+import org.example.api.AuthHandler;
+import org.example.config.AppConfig;
+
+import java.net.InetSocketAddress;
 
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("OTP Service started");
+    public static void main(String[] args) throws Exception {
+        int port = AppConfig.getInt("server.port");
 
-        UserDao userDao = new UserDao();
+        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
-        User user = new User("user1", "test_hash", Role.USER);
-        User createdUser = userDao.create(user);
+        AuthHandler authHandler = new AuthHandler();
 
-        System.out.println("Created user:");
-        System.out.println(createdUser);
+        server.createContext("/api/register", authHandler);
+        server.createContext("/api/login", authHandler);
 
-        System.out.println("Admin exists: " + userDao.adminExists());
+        server.setExecutor(null);
+        server.start();
 
-        System.out.println("Non-admin users:");
-        for (User nonAdmin : userDao.findAllNonAdmins()) {
-            System.out.println(nonAdmin);
-        }
+        System.out.println("OTP Service started on port " + port);
     }
 }
