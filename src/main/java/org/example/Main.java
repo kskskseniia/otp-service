@@ -6,10 +6,14 @@ import org.example.api.AuthHandler;
 import org.example.api.OtpHandler;
 import org.example.config.AppConfig;
 import org.example.service.ExpiredOtpScheduler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 
 public class Main {
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) throws Exception {
         int port = AppConfig.getInt("server.port");
 
@@ -28,13 +32,12 @@ public class Main {
         server.createContext("/api/otp/generate", otpHandler);
         server.createContext("/api/otp/validate", otpHandler);
 
-
         server.setExecutor(null);
         server.start();
 
         ExpiredOtpScheduler expiredOtpScheduler = new ExpiredOtpScheduler();
         expiredOtpScheduler.start();
 
-        System.out.println("OTP Service started on port " + port);
+        logger.info("OTP Service started on port {}", port);
     }
 }

@@ -39,6 +39,6 @@ build/
 
 
 src/main/resources/application.properties
-target/
 .idea/
 otp_codes.txt
+logs/

@@ -3,11 +3,17 @@ package org.example.service;
 import org.example.config.AppConfig;
 import org.example.dao.OtpCodeDao;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+
 public class ExpiredOtpScheduler {
+    private static final Logger logger = LoggerFactory.getLogger(ExpiredOtpScheduler.class);
+
     private final OtpCodeDao otpCodeDao;
     private final ScheduledExecutorService scheduler;
 
@@ -26,7 +32,7 @@ public class ExpiredOtpScheduler {
                 TimeUnit.SECONDS
         );
 
-        System.out.println("Expired OTP scheduler started. Interval: " + intervalSeconds + " seconds");
+        logger.info("Expired OTP scheduler started. Interval: {} seconds", intervalSeconds);
     }
 
     private void expireOldCodes() {
@@ -34,11 +40,10 @@ public class ExpiredOtpScheduler {
             int expiredCount = otpCodeDao.expireOldActiveCodes();
 
             if (expiredCount > 0) {
-                System.out.println("Expired OTP codes: " + expiredCount);
+                logger.info("Expired OTP codes: {}", expiredCount);
             }
         } catch (Exception e) {
-            System.err.println("Failed to expire OTP codes");
-            e.printStackTrace();
+            logger.error("Failed to expire OTP codes", e);
         }
     }
 }
