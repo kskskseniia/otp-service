@@ -9,6 +9,7 @@ import org.example.notification.FileNotificationService;
 import org.example.notification.NotificationService;
 import org.example.notification.EmailNotificationService;
 import org.example.notification.TelegramNotificationService;
+import org.example.notification.SmsNotificationService;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
@@ -96,6 +97,7 @@ public class OtpService {
             case "FILE" -> new FileNotificationService();
             case "EMAIL" -> new EmailNotificationService();
             case "TELEGRAM" -> new TelegramNotificationService();
+            case "SMS" -> new SmsNotificationService();
             default -> throw new RuntimeException("Unsupported notification channel: " + channel);
         };
     }

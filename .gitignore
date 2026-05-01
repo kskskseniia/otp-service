@@ -41,6 +41,7 @@ build/
 src/main/resources/application.properties
 src/main/resources/email.properties
 src/main/resources/telegram.properties
+src/main/resources/sms.properties
 .idea/
 otp_codes.txt
 logs/

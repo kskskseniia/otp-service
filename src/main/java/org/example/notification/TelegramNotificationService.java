@@ -10,9 +10,6 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
-/**
- * Сервис отправки OTP-кодов через Telegram Bot API.
- */
 public class TelegramNotificationService implements NotificationService {
     private static final String CONFIG_FILE = "telegram.properties";
 
