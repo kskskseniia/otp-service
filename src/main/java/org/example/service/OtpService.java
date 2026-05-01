@@ -7,6 +7,7 @@ import org.example.model.OtpConfig;
 import org.example.model.OtpStatus;
 import org.example.notification.FileNotificationService;
 import org.example.notification.NotificationService;
+import org.example.notification.EmailNotificationService;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
@@ -92,6 +93,7 @@ public class OtpService {
 
         return switch (channel.toUpperCase()) {
             case "FILE" -> new FileNotificationService();
+            case "EMAIL" -> new EmailNotificationService();
             default -> throw new RuntimeException("Unsupported notification channel: " + channel);
         };
     }

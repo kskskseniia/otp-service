@@ -44,9 +44,10 @@ public class OtpHandler implements HttpHandler {
             logger.warn("OTP endpoint not found: {} {}", method, path);
             HttpUtils.sendError(exchange, 404, "Endpoint not found");
         } catch (RuntimeException e) {
-            logger.warn("OTP request failed: {} {} error={}", method, path, e.getMessage());
+            logger.warn("OTP request failed: {} {} error={}", method, path, e.getMessage(), e);
             HttpUtils.sendError(exchange, 400, e.getMessage());
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             logger.error("Internal server error in OTP request: {} {}", method, path, e);
             HttpUtils.sendError(exchange, 500, "Internal server error");
         }

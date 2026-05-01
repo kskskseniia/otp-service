@@ -39,6 +39,7 @@ build/
 
 
 src/main/resources/application.properties
+src/main/resources/email.properties
 .idea/
 otp_codes.txt
 logs/
